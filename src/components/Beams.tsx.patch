@@ -1,0 +1,38 @@
+<Canvas dpr={[1, 2]} frameloop="always" className="w-full h-full relative">
+    {children}
+  </Canvas>
+);
+=======
+import { useState } from "react";
+
+const CanvasWrapper: FC<{ children: ReactNode }> = ({ children }) => {
+  const [renderer, setRenderer] = useState<THREE.WebGLRenderer | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (renderer) {
+        renderer.dispose();
+        const gl = renderer.getContext();
+        if (gl && typeof gl.getExtension === "function") {
+          const loseContext = gl.getExtension("WEBGL_lose_context");
+          if (loseContext) {
+            loseContext.loseContext();
+          }
+        }
+      }
+    };
+  }, [renderer]);
+
+  return (
+    <Canvas
+      dpr={[1, 2]}
+      frameloop="always"
+      className="w-full h-full relative"
+      onCreated={({ gl }) => {
+        setRenderer(gl);
+      }}
+    >
+      {children}
+    </Canvas>
+  );
+};

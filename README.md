@@ -1,4 +1,15 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SpaceLabs Website
+
+A futuristic, minimalist, and horizontally scrolling website for SpaceLabs — at the forefront of SpaceTech, AI, Embedded Systems, and Autonomous Robotics.
+
+## Features
+- Horizontal scroll with snap sections
+- Sticky minimal navbar and bottom scroll indicator
+- Hero section with 3D placeholder
+- About, What We Do, Showcase, Labs, Team, and Contact sections
+- Modern color palette: #0a0a0a (black), #00f0ff (tech blue), #7f00ff (deep violet), #baffc9 (neon green), white/light gray
+- Futuristic fonts: Orbitron, Space Grotesk, Rajdhani
+- Ready for GSAP/Three.js integration
 
 ## Getting Started
 
@@ -20,17 +31,11 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+## Customization
+- Edit sections in `src/components/`
+- Update styles in `tailwind.config.js` and `globals.css`
+- Replace 3D/image placeholders with real assets as needed
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+© SpaceLabs 2025

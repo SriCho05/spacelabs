@@ -1,0 +1,3 @@
+<!-- Use this file to provide workspace-specific custom instructions to Copilot. For more details, visit https://code.visualstudio.com/docs/copilot/copilot-customization#_use-a-githubcopilotinstructionsmd-file -->
+
+This is a Next.js + Tailwind CSS project for SpaceLabs. Use a horizontal scroll layout with snap sections, sticky minimal navbar, and a bottom scroll indicator. Use the color palette: #0a0a0a (black), #00f0ff (tech blue), #7f00ff (deep violet), #baffc9 (neon green), and white/light gray for text. Use Orbitron, Space Grotesk, and Rajdhani fonts. Prepare for GSAP/Three.js integration but use placeholders for now.

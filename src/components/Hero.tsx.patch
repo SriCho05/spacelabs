@@ -1,0 +1,148 @@
+import React from 'react';
+import dynamic from 'next/dynamic';
+import type { DotGridProps } from './DotGrid.types';
+import GradientText from './GradientText';
+
+const DotGrid = dynamic(() => import('./DotGrid'), { ssr: false }) as React.ComponentType<DotGridProps>;
+
+const Hero = () => (
+  <section id="hero" className="snap-center flex-shrink-0 w-screen h-screen flex flex-col items-center justify-center bg-black text-light relative overflow-hidden">
+    {/* Animated DotGrid background */}
+    <div className="absolute inset-0 w-full h-full z-0">
+      <DotGrid
+        dotSize={10}
+        gap={15}
+        proximity={120}
+        shockRadius={250}
+        shockStrength={5}
+        resistance={750}
+        returnDuration={1.5}
+      />
+    </div>
+    <div className="z-10 flex flex-col items-center">
+      <div className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl px-10 py-8 shadow-xl mb-4">
+        <h1 className="font-orbitron text-5xl md:text-7xl text-techblue drop-shadow text-center">Where Innovation Meets Orbit</h1>
+      </div>
+      <div className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl px-8 py-6 shadow-lg mb-8">
+        <GradientText
+          colors={["#ff6ec4", "#7873f5", "#ff6ec4", "#7873f5", "#ff6ec4"]}
+          animationSpeed={3}
+          showBorder={false}
+          className="text-xl md:text-2xl text-center max-w-xl font-spacegrotesk"
+        >
+          Building autonomous, intelligent systems for space and Earth.
+        </GradientText>
+      </div>
+      <a
+        href="#about"
+        className="group relative inline-flex items-center justify-center px-8 py-3 rounded-full font-bold font-rajdhani text-lg bg-white/10 backdrop-blur-md border border-techblue text-techblue shadow-lg overflow-hidden transition-all duration-300 hover:scale-105 focus:outline-none"
+      >
+        {/* Blue swipe-in background (debug: should animate left to right on hover) */}
+        <span
+          className="absolute inset-0 w-full h-full bg-techblue z-0 pointer-events-none transition-transform transition-opacity duration-300 origin-left scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100"
+          style={{ transitionProperty: 'transform,opacity' }}
+          aria-hidden="true"
+        />
+        {/* Button text */}
+        <span className="relative z-10 pr-2 transition-colors duration-300 group-hover:text-black">Explore Our Work</span>
+        {/* Arrow slides out on hover */}
+        <span className="relative z-10 inline-block transition-transform duration-300 group-hover:translate-x-4 group-hover:text-black ml-2">&rarr;</span>
+        {/* Border ring on hover */}
+        <span className="absolute left-0 top-0 w-full h-full border-2 border-techblue rounded-full opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 pointer-events-none z-20" />
+      </a>
+      <div className="flex gap-4 mt-8">
+        {/* Email Icon */}
+        <a href="mailto:hello@spacelabs.com" aria-label="Email" className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-full p-3 shadow-md hover:bg-white/20 transition">
+          <svg width="28" height="28" fill="none" viewBox="0 0 24 24"><path d="M2 6.5A2.5 2.5 0 0 1 4.5 4h15A2.5 2.5 0 0 1 22 6.5v11A2.5 2.5 0 0 1 19.5 20h-15A2.5 2.5 0 0 1 2 17.5v-11Zm2.5-.5a.5.5 0 0 0-.5.5v.217l8 5.333 8-5.333V6.5a.5.5 0 0 0-.5-.5h-15Zm15 13a.5.5 0 0 0 .5-.5v-8.217l-7.5 5-7.5-5V17.5a.5.5 0 0 0 .5.5h15Z" fill="#fff"/></svg>
+        </a>
+        {/* LinkedIn Icon */}
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-full p-3 shadow-md hover:bg-white/20 transition">
+          <svg width="28" height="28" fill="none" viewBox="0 0 24 24"><path d="M19 0h-14C2.24 0 0 2.24 0 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5V5c0-2.76-2.24-5-5-5ZM7.12 19H4.56V9h2.56v10ZM5.84 7.67a1.48 1.48 0 1 1 0-2.96 1.48 1.48 0 0 1 0 2.96ZM20 19h-2.56v-4.8c0-1.14-.02-2.6-1.59-2.6-1.59 0-1.83 1.24-1.83 2.52V19h-2.56V9h2.46v1.37h.03c.34-.64 1.18-1.31 2.43-1.31 2.6 0 3.08 1.71 3.08 3.94V19Z" fill="#fff"/></svg>
+        </a>
+        {/* GitHub Icon */}
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-full p-3 shadow-md hover:bg-white/20 transition">
+          <svg width="28" height="28" fill="none" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.49.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.6-3.37-1.34-3.37-1.34-.45-1.15-1.1-1.46-1.1-1.46-.9-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 2.5-.34c.85.01 1.71.11 2.5.34 1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.85-2.34 4.7-4.57 4.95.36.31.68.92.68 1.85 0 1.33-.01 2.41-.01 2.74 0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10Z" fill="#fff"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+);
+
+export default Hero;
+=======
+"use client";
+import React from 'react';
+import dynamic from 'next/dynamic';
+import GradientText from './GradientText';
+
+const DotGrid = dynamic(() => import('./DotGrid'), { ssr: false });
+
+const highlights = [
+  { icon: '✅', text: '30+ software and AI projects delivered' },
+  { icon: '🌍', text: '22 premiere clients' },
+  { icon: '🛰', text: 'Multi-sensor fusion powered by SpectraAI' },
+  { icon: '🤖', text: 'Real-time monitoring & decision-making at scale' },
+];
+
+const Hero = () => (
+  <section id="hero" className="snap-center flex-shrink-0 w-screen h-screen flex flex-col items-center justify-center bg-black text-light relative overflow-hidden">
+    {/* Animated DotGrid background */}
+    <div className="absolute inset-0 w-full h-full z-0">
+      <DotGrid
+        dotSize={10}
+        gap={15}
+        proximity={120}
+        shockRadius={250}
+        shockStrength={5}
+        resistance={750}
+        returnDuration={1.5}
+      />
+    </div>
+    <div className="z-10 flex flex-col items-center max-w-6xl px-6">
+      <h1 className="font-orbitron text-4xl md:text-6xl text-techblue drop-shadow text-center mb-4">
+        Precision Software Intelligence for Infrastructure, Agriculture & Energy
+      </h1>
+      <GradientText
+        colors={["#ff6ec4", "#7873f5", "#ff6ec4", "#7873f5", "#ff6ec4"]}
+        animationSpeed={3}
+        showBorder={false}
+        className="text-lg md:text-xl text-center max-w-3xl font-spacegrotesk mb-8"
+      >
+        AI-powered platforms that turn drone, robot, and sensor data into actionable insights — deployed across India and the Middle East.
+      </GradientText>
+      <div className="flex gap-6 justify-center mb-10 flex-wrap">
+        <a
+          href="#explore"
+          className="px-6 py-3 rounded-full font-bold font-rajdhani text-lg bg-techblue text-black shadow-lg hover:bg-blue-600 transition"
+        >
+          Explore SAFE Platforms
+        </a>
+        <a
+          href="#demo"
+          className="px-6 py-3 rounded-full font-bold font-rajdhani text-lg border border-techblue text-techblue shadow-lg hover:bg-techblue hover:text-black transition"
+        >
+          Request Demo
+        </a>
+        <a
+          href="#join"
+          className="px-6 py-3 rounded-full font-bold font-rajdhani text-lg border border-techblue text-techblue shadow-lg hover:bg-techblue hover:text-black transition"
+        >
+          Join AvianPilot Network
+        </a>
+      </div>
+      <div className="flex space-x-8 overflow-x-auto scrollbar-thin scrollbar-thumb-techblue scrollbar-track-transparent py-4 px-2 w-full max-w-4xl">
+        {highlights.map(({ icon, text }, index) => (
+          <div
+            key={index}
+            className="flex flex-shrink-0 items-center space-x-3 bg-white/10 border border-white/20 rounded-xl px-6 py-4 shadow-md text-white font-semibold min-w-[280px]"
+          >
+            <span className="text-2xl">{icon}</span>
+            <span>{text}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+export default Hero;
