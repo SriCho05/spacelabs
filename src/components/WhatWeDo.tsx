@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import ImageTrail from './ImageTrail';
 import Silk from './Silk';
+import Link from 'next/link';
 
 const trailImages = [
   '/images/trail/58.jpeg',
@@ -13,26 +14,22 @@ const trailImages = [
   '/images/trail/79.jpeg',
 ];
 
-const features = [
+// Showcase topics for WhatWeDo
+const showcaseTopics = [
 	{
-		title: 'Embedded Aerospace Systems',
-		desc: 'Space-grade hardware, precision firmware.',
+		title: "SAFE Platforms",
+		desc: "Infra, Agri, and Energy solutions.",
 		icon: '/images/aero.png',
 	},
 	{
-		title: 'Edge AI Hardware',
-		desc: 'AI at the edge, real-time insight.',
+		title: "SpectraAI",
+		desc: "AI-powered multisensor insights.",
 		icon: '/images/AI.png',
 	},
 	{
-		title: 'Autonomous Robotics',
-		desc: 'Self-guided, adaptive, robust.',
+		title: "AvianPilot",
+		desc: "Global drone workforce platform.",
 		icon: '/images/robot.png',
-	},
-	{
-		title: 'Precision Actuation',
-		desc: 'Ultra-fine control, zero-latency.',
-		icon: '/images/ruler.png',
 	},
 ];
 
@@ -45,7 +42,7 @@ const WhatWeDo = () => {
 	return (
 		<section
 			id="work"
-			className="snap-center flex-shrink-0 w-screen h-screen flex items-center justify-center bg-black text-light relative overflow-hidden"
+			className="snap-center flex-shrink-0 w-full h-screen flex items-center justify-center bg-black text-light relative overflow-hidden"
 		>
 			{isClient && (
 				<div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
@@ -76,34 +73,51 @@ const WhatWeDo = () => {
 				</div>
 				{/* Feature cards overlay, allow pointer events to pass through except for interactive elements */}
 				<div className="flex gap-8 z-10 relative w-auto" style={{ pointerEvents: 'none' }}>
-					{features.map((f, i) => (
-<div
-							key={f.title}
-							className={`relative backdrop-blur-lg border border-white/20 rounded-2xl p-8 w-72 h-80 flex flex-col items-center justify-center shadow-xl hover:scale-105 hover:shadow-2xl transition-all group overflow-hidden`}
-							style={{ pointerEvents: 'auto', backgroundColor: '#0a1c29dd' }}
+					{showcaseTopics.map((topic) => (
+						<div
+							key={topic.title}
+							className="relative backdrop-blur-lg border border-white/20 rounded-2xl p-12 w-[26rem] h-[23rem] flex flex-col items-center justify-center shadow-2xl hover:scale-105 hover:shadow-2xl transition-all group overflow-hidden bg-[#0a1c29dd]"
+							style={{ pointerEvents: 'auto' }}
 						>
-							{/* Animated gradient border ring */}
-							<span className="absolute inset-0 rounded-2xl pointer-events-none border-2 border-transparent group-hover:border-techblue transition-all duration-300 z-10" />
-							{/* Animated icon with hover effects and ease-out for landing */}
-							<div className={`w-28 h-28 mb-4 flex items-center justify-center animate-pulse-slow z-20 transition-all duration-300 ease-out group-hover:scale-110 ${
-								f.icon === '/images/aero.png' 
-									? 'group-hover:-translate-y-4 group-hover:rotate-[-10deg]'  // "Take off" animation for aero icon
-									: 'group-hover:rotate-[15deg]' // Standard rotation for other icons
-							}`}>
+							<div className="w-28 h-28 mb-4 flex items-center justify-center animate-pulse-slow z-20 transition-all duration-300 ease-out group-hover:scale-110">
 								<img
-									src={f.icon}
-									alt={`${f.title} icon`}
-									width={100} // Increased from 48
-									height={100} // Increased from 48
-									className="object-contain" // Ensures the image fits well within its container
+									src={topic.icon}
+									alt={`${topic.title} icon`}
+									width={100}
+									height={100}
+									className="object-contain"
 								/>
 							</div>
-<h3 className="font-orbitron text-2xl mt-2 mb-2 text-white text-center z-20 drop-shadow">
-								{f.title}
+							<h3 className="font-orbitron text-2xl mt-2 mb-2 text-white text-center z-20 drop-shadow">
+								{topic.title}
 							</h3>
-<p className="text-center text-white font-spacegrotesk z-20">
-								{f.desc}
+							<p className="text-center text-white font-spacegrotesk z-20 mb-4">
+								{topic.desc}
 							</p>
+							{/* Animated glowing right arrow button */}
+              <Link
+                href={
+                  topic.title === "SAFE Platforms"
+                    ? "/safe-platforms"
+                    : topic.title === "SpectraAI"
+                    ? "/spectraai"
+                    : "/avianpilot"
+                }
+                className="relative flex items-center justify-center px-4 py-3 rounded-full font-rajdhani text-xl bg-techblue text-black font-bold shadow-lg overflow-hidden transition-all duration-200 group/button border-2 border-techblue mx-auto mt-auto active:scale-90 focus:scale-95
+                  before:absolute before:inset-0 before:rounded-full before:bg-techblue before:blur before:opacity-60 before:transition-all before:duration-200 before:scale-100
+                  hover:before:scale-110 hover:before:opacity-80 hover:shadow-[0_0_32px_8px_#00f0ff] hover:bg-white/90 hover:text-deepviolet"
+                style={{ zIndex: 30, display: 'flex', width: 72, height: 72, minWidth: 72, minHeight: 72 }}
+                aria-label="Go to details"
+                scroll={false}
+              >
+                <span className="relative z-10 flex items-center justify-center w-full h-full">
+                  <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="18" cy="18" r="16" stroke="#00f0ff" strokeWidth="2.5" fill="none" />
+                    <path d="M13 18h10" stroke="#00f0ff" strokeWidth="2.5" strokeLinecap="round"/>
+                    <path d="M19 14l4 4-4 4" stroke="#00f0ff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </span>
+              </Link>
 						</div>
 					))}
 				</div>

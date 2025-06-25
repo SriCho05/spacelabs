@@ -19,7 +19,7 @@ const teamMembers = [
 ];
 
 const Team = () => (
-  <section id="team" className="snap-center flex-shrink-0 w-screen min-h-screen flex items-center justify-center bg-black text-light relative overflow-hidden p-8">
+  <section id="team" className="snap-center flex-shrink-0 w-full min-h-screen flex items-center justify-center bg-black text-light relative overflow-hidden p-8">
     <div style={{ height: '500px', position: 'relative' }}>
       <InfiniteScroll
         items={teamMembers}

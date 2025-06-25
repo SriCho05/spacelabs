@@ -1,58 +1,44 @@
 "use client";
 import React from 'react';
-import dynamic from 'next/dynamic';
-import GradientText from './GradientText';
-
-const DotGrid = dynamic(() => import('./DotGrid'), { ssr: false });
+import Spline from '@splinetool/react-spline';
+import SimpleFluidGlass from './SimpleFluidGlass';
 
 const Hero = () => (
-<section id="hero" className="snap-center flex-shrink-0 w-screen h-screen flex flex-col items-center justify-center bg-black text-light relative overflow-hidden">
-    {/* Animated DotGrid background */}
+  <section id="hero" className="relative w-full min-h-screen flex flex-col items-center justify-center bg-black text-light overflow-hidden snap-center flex-shrink-0">
+    {/* Spline 3D background */}
     <div className="absolute inset-0 w-full h-full z-0">
-      <DotGrid
-        dotSize={10}
-        gap={15}
-        proximity={120}
-        shockRadius={250}
-        shockStrength={5}
-        resistance={750}
-        returnDuration={1.5}
+      <Spline
+        scene="https://prod.spline.design/7hJZF3SIDzAyflaB/scene.splinecode"
+        style={{ width: '100%', height: '100%' }}
+        className="w-full h-full"
       />
     </div>
-    <div className="z-10 flex flex-col items-center max-w-6xl px-6">
-      <div className="bg-white/10 backdrop-blur-md rounded-lg px-6 py-4 mt-20 mb-4 inline-block">
-        <h1 className="font-orbitron text-4xl md:text-6xl text-techblue drop-shadow text-center">
-          Precision Software Intelligence for Infrastructure, Agriculture & Energy
-        </h1>
-      </div>
-      <GradientText
-        colors={["#ffd6e8", "#a3a0ff", "#ffd6e8", "#a3a0ff", "#ffd6e8"]}
-        animationSpeed={3}
-        showBorder={false}
-        className="text-lg md:text-xl text-center max-w-3xl font-spacegrotesk mb-8"
-      >
-        AI-powered platforms that turn drone, robot, and sensor data into actionable insights — deployed across India and the Middle East.
-      </GradientText>
-<div className="grid grid-cols-3 gap-6 justify-center mb-10">
+    {/* Right center - Action buttons only */}
+    <div className="absolute top-1/2 right-16 -translate-y-1/2 flex flex-col gap-4 pointer-events-auto z-10">
+      <SimpleFluidGlass variant="animated" className="group">
         <a
-          href="#showcase"
-          className="px-6 py-3 rounded-full font-bold font-rajdhani text-lg bg-white/10 backdrop-blur-md border border-white/30 text-white shadow-lg hover:bg-neongreen/50 hover:drop-shadow-[0_0_8px_rgba(0,255,0,0.7)] transition"
+          href="/safe-platforms"
+          className="block px-6 py-3 rounded-full font-bold font-rajdhani text-lg text-white shadow-lg hover:text-neongreen transition text-center"
         >
           Explore SAFE Platforms
         </a>
+      </SimpleFluidGlass>
+      <SimpleFluidGlass variant="animated" className="group">
         <a
-          href="#demo"
-          className="px-6 py-3 rounded-full font-bold font-rajdhani text-lg bg-white/10 backdrop-blur-md border border-white/30 text-techblue shadow-lg hover:bg-white/20 hover:text-black transition"
+          href="/contact"
+          className="block px-6 py-3 rounded-full font-bold font-rajdhani text-lg text-techblue shadow-lg hover:text-white transition text-center"
         >
           Request Demo
         </a>
+      </SimpleFluidGlass>
+      <SimpleFluidGlass variant="animated" className="group">
         <a
           href="#join"
-          className="px-6 py-3 rounded-full font-bold font-rajdhani text-lg bg-white/10 backdrop-blur-md border border-white/30 text-techblue shadow-lg hover:bg-white/20 hover:text-black transition"
+          className="block px-6 py-3 rounded-full font-bold font-rajdhani text-lg text-techblue shadow-lg hover:text-white transition text-center"
         >
           Join AvianPilot Network
         </a>
-      </div>
+      </SimpleFluidGlass>
     </div>
   </section>
 );

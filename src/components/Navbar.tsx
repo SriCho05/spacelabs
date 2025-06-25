@@ -13,9 +13,15 @@ const navLinks = [
   { id: 'hero', label: 'Home', href: '#hero' },
   { id: 'highlights', label: 'Highlights', href: '#highlights' },
   { id: 'about', label: 'About', href: '#about' },
-  { id: 'work', label: 'Work', href: '#work' },
-  { id: 'showcase', label: 'Showcase', href: '#showcase' },
-  { id: 'labs', label: 'Labs', href: '#labs' },
+  { 
+    id: 'our-products', 
+    label: 'Our Products', 
+    href: '#work', // Main button now "Our Products" with correct href
+    dropdown: [
+      { id: 'safe-platforms', label: 'SAFE AI', href: '/safe-platforms' },
+      { id: 'spectraai', label: 'Spectra AI', href: '/spectraai' }
+    ]
+  },
   { id: 'team', label: 'Team', href: '#team' },
   { id: 'contact', label: 'Contact', href: '#contact' },
 ];
@@ -94,20 +100,18 @@ const Navbar: React.FC<NavbarProps> = ({ onNavLinkClick, theme, toggleTheme }) =
   return (
     <nav className="fixed top-0 left-0 w-full flex justify-between items-center z-50 px-8 py-4 bg-black/60 backdrop-blur-sm border-b border-techblue">
       <div className="font-orbitron text-techblue text-2xl tracking-widest flex items-center gap-4">
-        SpaceLabs
-        <button
-          onClick={toggleTheme}
-          aria-label="Toggle Dark Mode"
-          className="bg-white text-black border border-gray-400 rounded px-3 py-1 text-sm font-semibold hover:bg-gray-300 transition"
-        >
-          {theme === "dark" ? "Light Mode" : "Dark Mode"}
-        </button>
+        <img src="/images/IWindDeck.png" alt="IWind Logo" className="h-10 w-auto" />
       </div>
       <GooeyNav
         items={navLinks}
         activeIndex={activeIndex}
-        onItemClick={(item) => { // No 'index' needed here if only 'item.id' is used
-          onNavLinkClick(item.id);
+        onItemClick={(item) => {
+          // If the item has an href that starts with '/', use Next.js router for navigation
+          if (item.href && item.href.startsWith('/')) {
+            window.location.href = item.href;
+          } else if (item.id) {
+            onNavLinkClick(item.id);
+          }
         }} />
     </nav>
   );

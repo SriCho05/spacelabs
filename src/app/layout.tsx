@@ -1,10 +1,8 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Orbitron, Space_Grotesk, Rajdhani } from 'next/font/google';
-
-const orbitron = Orbitron({ subsets: ['latin'], weight: ['500', '700'], variable: '--font-orbitron' });
-const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['400', '700'], variable: '--font-spacegrotesk' });
-const rajdhani = Rajdhani({ subsets: ['latin'], weight: ['500', '700'], variable: '--font-rajdhani' });
+import ClientLayout from '@/components/ClientLayout';
+import AppLoader from '@/components/AppLoader';
+import CustomCursor from '@/components/CustomCursor';
 
 export const metadata: Metadata = {
   title: 'SpaceLabs',
@@ -19,11 +17,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${orbitron.variable} ${spaceGrotesk.variable} ${rajdhani.variable}`}
-      suppressHydrationWarning // Add this prop
+      suppressHydrationWarning
     >
-      <body className="bg-black text-light font-spacegrotesk">
-        {children}
+      <body className="bg-black text-light font-sf-pro">
+        <CustomCursor />
+        <AppLoader>{children}</AppLoader>
       </body>
     </html>
   );

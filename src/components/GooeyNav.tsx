@@ -1,8 +1,10 @@
 import React, { useRef, useEffect, useState } from "react";
 
 interface GooeyNavItem {
+  id?: string;
   label: string;
   href: string;
+  dropdown?: { id: string; label: string; href: string; }[];
 }
 
 export interface GooeyNavProps {
@@ -37,6 +39,46 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
   const [currentInternalActiveIndex, setCurrentInternalActiveIndex] = useState<number>(
     controlledActiveIndex !== undefined ? controlledActiveIndex : initialActiveIndex
   );
+  const [dropdownOpen, setDropdownOpen] = useState<number | null>(null);
+  const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Handle dropdown open with immediate effect
+  const handleDropdownOpen = (index: number) => {
+    if (dropdownTimeoutRef.current) {
+      clearTimeout(dropdownTimeoutRef.current);
+      dropdownTimeoutRef.current = null;
+    }
+    setDropdownOpen(index);
+  };
+
+  // Handle dropdown close with 2-second delay
+  const handleDropdownClose = () => {
+    if (dropdownTimeoutRef.current) {
+      clearTimeout(dropdownTimeoutRef.current);
+    }
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setDropdownOpen(null);
+      dropdownTimeoutRef.current = null;
+    }, 2000);
+  };
+
+  // Cancel the close timeout if user hovers back
+  const handleDropdownKeepOpen = () => {
+    if (dropdownTimeoutRef.current) {
+      clearTimeout(dropdownTimeoutRef.current);
+      dropdownTimeoutRef.current = null;
+    }
+  };
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (dropdownTimeoutRef.current) {
+        clearTimeout(dropdownTimeoutRef.current);
+      }
+    };
+  }, []);
+
   const noise = (n = 1) => n / 2 - Math.random() * n;
   const getXY = (
     distance: number,
@@ -369,15 +411,51 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
                 className={`py-[0.6em] px-[1em] rounded-full relative cursor-pointer transition-[background-color_color_box-shadow] duration-300 ease shadow-[0_0_0.5px_1.5px_transparent] text-white ${
                   currentInternalActiveIndex === index ? "active" : ""
                 }`} // Use currentInternalActiveIndex for styling
-                onClick={(e) => handleClick(e, index)}
+                onClick={(e) => item.dropdown ? e.preventDefault() : handleClick(e, index)}
+                onMouseEnter={() => item.dropdown && handleDropdownOpen(index)}
+                onMouseLeave={() => item.dropdown && handleDropdownClose()}
               >
                 <a
                   href={item.href}
                   onKeyDown={(e) => handleKeyDown(e, index)}
-                  className="outline-none"
+                  className="outline-none flex items-center gap-1"
                 >
                   {item.label}
+                  {item.dropdown && (
+                    <svg 
+                      className={`w-4 h-4 transition-transform duration-200 ${dropdownOpen === index ? 'rotate-180' : ''}`}
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  )}
                 </a>
+                {item.dropdown && dropdownOpen === index && (
+                  <div 
+                    className="absolute top-full left-0 mt-2 w-48 bg-black/90 backdrop-blur-sm border border-techblue/30 rounded-lg py-2 z-50"
+                    onMouseEnter={handleDropdownKeepOpen}
+                    onMouseLeave={handleDropdownClose}
+                  >
+                    {item.dropdown.map((dropdownItem, dropdownIndex) => (
+                      <a
+                        key={dropdownIndex}
+                        href={dropdownItem.href}
+                        className="block px-4 py-2 text-white hover:bg-techblue/20 hover:text-techblue transition-colors duration-200"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setDropdownOpen(null);
+                          if (onItemClick) {
+                            onItemClick(dropdownItem as GooeyNavItem, index);
+                          }
+                        }}
+                      >
+                        {dropdownItem.label}
+                      </a>
+                    ))}
+                  </div>
+                )}
               </li>
             ))}
           </ul>

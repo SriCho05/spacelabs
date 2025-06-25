@@ -6,12 +6,14 @@ const LetterGlitch = ({
   centerVignette = false,
   outerVignette = true,
   smooth = true,
+  fontSize = 16,
 }: {
   glitchColors?: string[];
   glitchSpeed?: number;
   centerVignette?: boolean;
   outerVignette?: boolean;
   smooth?: boolean;
+  fontSize?: number;
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const animationRef = useRef<number | null>(null);
@@ -27,9 +29,9 @@ const LetterGlitch = ({
   const context = useRef<CanvasRenderingContext2D | null>(null);
   const lastGlitchTime = useRef(Date.now());
 
-  const fontSize = 16;
-  const charWidth = 10;
-  const charHeight = 20;
+  // Use fontSize for charWidth and charHeight for scaling
+  const charWidth = Math.round(fontSize * 0.65);
+  const charHeight = Math.round(fontSize * 1.25);
 
   const lettersAndSymbols = [
     "A",
@@ -211,6 +213,7 @@ const LetterGlitch = ({
 
   const handleSmoothTransitions = () => {
     let needsRedraw = false;
+
     letters.current.forEach((letter) => {
       if (letter.colorProgress < 1) {
         letter.colorProgress += 0.05;

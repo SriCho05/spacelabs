@@ -17,6 +17,26 @@ module.exports = {
         light: '#f5f5f5',
       },
       fontFamily: {
+        'sf-pro': [
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'SF Pro Display',
+          'SF Pro Text',
+          'system-ui',
+          'Segoe UI',
+          'Roboto',
+          'Helvetica Neue',
+          'Arial',
+          'sans-serif'
+        ],
+        'sf-mono': [
+          'SF Mono',
+          'Monaco',
+          'Consolas',
+          'Liberation Mono',
+          'Courier New',
+          'monospace'
+        ],
         orbitron: ['Orbitron', 'sans-serif'],
         spacegrotesk: ['Space Grotesk', 'sans-serif'],
         rajdhani: ['Rajdhani', 'sans-serif'],

@@ -1,12 +1,10 @@
 "use client";
-import { useRef, useEffect, useState, useMemo } from "react";
+import { useRef, useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import ScrollIndicator from "../components/ScrollIndicator";
 import Hero from "../components/Hero";
 import About from "../components/About";
 import WhatWeDo from "../components/WhatWeDo";
-import Showcase from "../components/Showcase";
-import Labs from "../components/Labs";
 import Team from "../components/Team";
 import Contact from "../components/Contact";
 import Highlights from "../components/Highlights";
@@ -19,8 +17,6 @@ const sections = [
   { id: "highlights", Component: Highlights, title: "HIGHLIGHTS" },
   { id: "about", Component: About, title: "ABOUT US" },
   { id: "work", Component: WhatWeDo, title: "WHAT WE DO" },
-  { id: "showcase", Component: Showcase, title: "SHOWCASE" },
-  { id: "labs", Component: Labs, title: "LABS" },
   { id: "team", Component: Team, title: "TEAM" },
   { id: "contact", Component: Contact, title: "CONTACT" },
 ];
@@ -43,19 +39,13 @@ export default function Home() {
     const mainEl = mainRef.current;
     if (!mainEl) return;
 
-    if (sectionIds[activeSectionIndex] === 'showcase') {
-      mainEl.classList.remove('snap-x', 'snap-mandatory');
-      mainEl.classList.add('snap-none'); // Disables scroll snapping
-      mainEl.style.overflowY = 'auto'; // Allow vertical scroll for Showcase
-    } else {
-      mainEl.classList.remove('snap-none');
-      mainEl.classList.add('snap-x', 'snap-mandatory'); // Re-enables horizontal snapping
-      mainEl.style.overflowY = 'hidden'; // Prevent vertical scroll for other sections
-      // If we are on a non-showcase page, ensure its scrollTop is 0.
-      // This handles the case when transitioning from Showcase to another section.
-      if (mainEl.scrollTop !== 0) {
-        mainEl.scrollTop = 0;
-      }
+    mainEl.classList.remove('snap-none');
+    mainEl.classList.add('snap-x', 'snap-mandatory'); // Re-enables horizontal snapping
+    mainEl.style.overflowY = 'hidden'; // Prevent vertical scroll for other sections
+    // If we are on a non-showcase page, ensure its scrollTop is 0.
+    // This handles the case when transitioning from Showcase to another section.
+    if (mainEl.scrollTop !== 0) {
+      mainEl.scrollTop = 0;
     }
   }, [activeSectionIndex]);
 
@@ -69,33 +59,6 @@ export default function Home() {
 
       // Determine if the primary scroll direction is vertical
       const isPrimaryVerticalScroll = Math.abs(event.deltaY) > Math.abs(event.deltaX);
-
-      if (currentSectionId === 'showcase') {
-        // When on the Showcase section:
-        // 1. If it's primarily a horizontal scroll, let the browser handle it (snapping is off).
-        if (!isPrimaryVerticalScroll) {
-           return;
-        }
-
-        // 2. If it's primarily a vertical scroll, check if we are at the vertical limits.
-        const isScrollingUp = event.deltaY < 0;
-        const isScrollingDown = event.deltaY > 0;
-        const atShowcaseTop = mainEl.scrollTop <= 1; // Small tolerance
-        const atShowcaseBottom = mainEl.scrollTop + mainEl.clientHeight >= mainEl.scrollHeight - 1; // Small tolerance
-
-        // If scrolling up at the top, or down at the bottom, proceed to horizontal navigation.
-        if ((isScrollingUp && atShowcaseTop) || (isScrollingDown && atShowcaseBottom)) {
-           // Prevent default vertical scroll to avoid bounce/overscroll before horizontal nav
-           event.preventDefault();
-           // Fall through to the horizontal scroll logic below
-        } else {
-           // If scrolling vertically *within* the Showcase content, let the browser handle it.
-           // Prevent default only if it's a vertical scroll gesture to ensure browser handles it.
-           if (isPrimaryVerticalScroll) {
-             return; // Let browser handle vertical scroll within showcase
-           }
-        }
-      }
 
       if (isWheeling) return; // Prevent re-triggering during smooth scroll
 
@@ -252,7 +215,11 @@ export default function Home() {
       id="scroll-container" // Ensure Navbar's IntersectionObserver can find this root
       className="relative flex h-screen w-screen snap-x snap-mandatory overflow-x-auto overflow-y-auto scroll-smooth"
     >
-      <Navbar onNavLinkClick={navigateToSectionByClick} />
+      <Navbar
+        theme="dark"
+        toggleTheme={() => {}}
+        onNavLinkClick={navigateToSectionByClick}
+      />
       <ScrollIndicator
         scrollPercentage={scrollPercentage}
         totalSections={sections.length}
@@ -261,27 +228,22 @@ export default function Home() {
       <div className="flex w-max h-full">
         {sections.map(({ id, Component, title }) => (
           <div
-            key={id} // Use id as key
-            className={`relative flex-shrink-0 w-screen ${
-              id === 'showcase' ? 'h-auto' : 'h-screen' // Allow Showcase to define its own height
-            }`}
-          > {/* Wrapper for section + scroll text */}
-            {id === 'showcase' ? <Component scrollYProgress={mainScrollYProgress} /> : <Component />}
-              <div className="absolute top-0 left-0 h-full w-20 md:w-24 z-30 flex items-center justify-center pointer-events-none overflow-hidden">
-                {/* Container for ScrollVelocity, adjust width (w-20/w-24) as needed */}
-                <div className="transform -rotate-90 whitespace-nowrap">
-                  <ScrollVelocity
-                    texts={[title.toUpperCase()]} // Ensure text is uppercase for style consistency
-                    velocity={15} // Increased velocity for a more noticeable base animation
-                    scrollContainerRef={mainRef}
-                    className="text-xl md:text-2xl font-orbitron text-techblue/30 tracking-wider" // Custom styling for the text (slightly less opaque)
-                    numCopies={10} // Increased for better coverage and smoother continuous scroll
-                    velocityMapping={{ input: [0, 1000], output: [0, 1] }} // More subtle scroll-based speed change
-                    // parallaxClassName="custom-parallax-vertical" // Optional: if you need very specific CSS overrides
-                    // scrollerClassName="custom-scroller-vertical"
-                  />
-                </div>
-              </div> {/* Close ScrollVelocity overlay div */}
+            key={id}
+            className={`relative flex-shrink-0 w-screen h-screen`}
+          >
+            <Component />
+            <div className="absolute top-0 left-0 h-full w-20 md:w-24 z-30 flex items-center justify-center pointer-events-none overflow-hidden">
+              <div className="transform -rotate-90 whitespace-nowrap">
+                <ScrollVelocity
+                  texts={[title.toUpperCase()]}
+                  velocity={15}
+                  scrollContainerRef={mainRef as any}
+                  className="text-xl md:text-2xl font-orbitron text-techblue/30 tracking-wider"
+                  numCopies={10}
+                  velocityMapping={{ input: [0, 1000], output: [0, 1] }}
+                />
+              </div>
+            </div>
           </div>
         ))}
       </div>

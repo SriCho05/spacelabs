@@ -1,8 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  basePath: '/spacelabs',
-  assetPrefix: '/spacelabs',
+  // basePath and assetPrefix removed to fix root URL 404 error
 };
 
 export default nextConfig;
