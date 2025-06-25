@@ -109,6 +109,13 @@ const Navbar: React.FC<NavbarProps> = ({ onNavLinkClick, theme, toggleTheme }) =
           // If the item has an href that starts with '/', use Next.js router for navigation
           if (item.href && item.href.startsWith('/')) {
             window.location.href = item.href;
+          } else if (item.href && item.href.startsWith('#')) {
+            // Scroll to the section with the corresponding id (strip the #)
+            const sectionId = item.href.replace('#', '');
+            const section = document.getElementById(sectionId);
+            if (section) {
+              section.scrollIntoView({ behavior: 'smooth' });
+            }
           } else if (item.id) {
             onNavLinkClick(item.id);
           }

@@ -410,8 +410,24 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
                 key={index}
                 className={`py-[0.6em] px-[1em] rounded-full relative cursor-pointer transition-[background-color_color_box-shadow] duration-300 ease shadow-[0_0_0.5px_1.5px_transparent] text-white ${
                   currentInternalActiveIndex === index ? "active" : ""
-                }`} // Use currentInternalActiveIndex for styling
-                onClick={(e) => item.dropdown ? e.preventDefault() : handleClick(e, index)}
+                }`}
+                onClick={(e) => {
+                  if (item.dropdown) {
+                    // If the main nav item has a dropdown, but also an href (like #work),
+                    // allow navigation to the href if the user clicks the text (not the dropdown arrow)
+                    if (item.href && item.href.startsWith('#')) {
+                      const sectionId = item.href.replace('#', '');
+                      const section = document.getElementById(sectionId);
+                      if (section) {
+                        section.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }
+                    // Prevent default dropdown open on click
+                    e.preventDefault();
+                  } else {
+                    handleClick(e, index);
+                  }
+                }}
                 onMouseEnter={() => item.dropdown && handleDropdownOpen(index)}
                 onMouseLeave={() => item.dropdown && handleDropdownClose()}
               >
