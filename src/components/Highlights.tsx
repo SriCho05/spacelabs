@@ -139,7 +139,7 @@ const Highlights = () => {
   }, []);
 
   return (
-    <section id="highlights" className="snap-center flex-shrink-0 w-full h-screen flex items-center justify-center bg-black text-light relative overflow-hidden">
+    <section id="highlights" className="snap-center flex-shrink-0 w-full min-h-[500px] sm:min-h-screen flex items-center justify-center bg-black text-light relative overflow-hidden">
       {/* GridDistortion Background */}
       <div className="absolute inset-0 z-0 opacity-40 filter grayscale">
         <GridDistortion
@@ -151,10 +151,11 @@ const Highlights = () => {
           className="w-full h-full"
         />
       </div>
-      <div className="flex w-full max-w-6xl z-10 relative items-center justify-center px-4">
-        {/* Glassmorphic 2x2 grid always perfectly centered, only overlay boxes animate in */}
+      <div className="flex w-full max-w-6xl z-10 relative items-center justify-center px-2 sm:px-4">
+        {/* Responsive: vertical on mobile, grid on desktop */}
         <div className="relative flex-1 flex justify-center transition-all duration-700" id="bento-glassmorphic-wrapper">
-          <div className="grid grid-cols-2 grid-rows-2 gap-8 mx-auto transition-all duration-700"
+          <div
+            className="flex flex-col gap-4 w-full max-w-xs mx-auto sm:grid sm:grid-cols-2 sm:grid-rows-2 sm:gap-8 sm:max-w-none transition-all duration-700"
             id="bento-glassmorphic"
             style={{
               margin: '0 auto',
@@ -164,7 +165,7 @@ const Highlights = () => {
             {highlights.map(({ number, suffix, icon, text }, index) => (
               <div
                 key={index}
-                className={`bg-white/10 border border-white/20 rounded-xl p-6 shadow-md text-white w-64 aspect-square flex flex-col items-center justify-center text-center transition-all duration-700 ease-in-out backdrop-blur-md relative`}
+                className="section-wrapper bg-white/10 border border-white/20 rounded-xl p-3 sm:p-6 shadow-md text-white w-full sm:w-64 h-40 sm:aspect-square flex flex-col items-center justify-center text-center transition-all duration-700 ease-in-out backdrop-blur-md relative overflow-hidden mx-auto"
                 style={{ cursor: (index === 1 || index === 2) ? 'pointer' : 'default' }}
               >
                 {/* Icon button for overlays */}
@@ -199,8 +200,8 @@ const Highlights = () => {
             ))}
           </div>
         </div>
-        {/* Glassmorphic box for Trusted by with animated logos and inner shadow, only visible on hover */}
-        <div id="trusted-glassmorphic" className={`bg-white/10 border border-white/20 rounded-xl p-6 shadow-md text-white max-w-xl w-full h-72 flex flex-col items-center justify-center text-center gap-4 backdrop-blur-md transition-all duration-700 ml-0 md:ml-8 absolute left-1/2 top-1/2 -translate-y-1/2 ${activeOverlay === 'trusted' ? 'scale-110 opacity-100 z-30 -translate-x-0' : 'scale-95 opacity-0 pointer-events-none z-0 -translate-x-1/2'}`} style={{ boxShadow: 'inset 0 4px 32px 0 rgba(0,240,255,0.10), 0 2px 16px 0 rgba(0,0,0,0.10)' }}>
+        {/* Overlays remain unchanged, but add responsive max-w and overflow-hidden */}
+        <div id="trusted-glassmorphic" className={`section-wrapper bg-white/10 border border-white/20 rounded-xl p-4 sm:p-6 shadow-md text-white max-w-xs sm:max-w-xl w-full h-72 flex flex-col items-center justify-center text-center gap-4 backdrop-blur-md transition-all duration-700 ml-0 md:ml-8 absolute left-1/2 top-1/2 -translate-y-1/2 ${activeOverlay === 'trusted' ? 'scale-110 opacity-100 z-30 -translate-x-0' : 'scale-95 opacity-0 pointer-events-none z-0 -translate-x-1/2'}`} style={{ boxShadow: 'inset 0 4px 32px 0 rgba(0,240,255,0.10), 0 2px 16px 0 rgba(0,0,0,0.10)', overflow: 'hidden' }}>
           <h3 className="text-2xl md:text-3xl font-orbitron text-techblue mb-2 tracking-widest uppercase">Trusted by</h3>
           <div className="relative w-full overflow-hidden group">
             <div className="flex animate-horizontal-scroll gap-4 w-max" style={{ animationPlayState: 'running' }}
@@ -208,11 +209,11 @@ const Highlights = () => {
               onMouseLeave={e => { e.currentTarget.style.animationPlayState = 'running'; }}
             >
               {clientLogos.concat(clientLogos).map((client, i) => (
-                <div key={i} className="flex items-center justify-center w-28 h-16 bg-white rounded-lg shadow-md p-2">
+                <div key={i} className="flex items-center justify-center w-20 h-12 sm:w-28 sm:h-16 bg-white rounded-lg shadow-md p-2">
                   <img
                     src={client.src}
                     alt={client.name}
-                    className="object-contain h-12 w-24 drop-shadow-lg transition-all duration-300"
+                    className="object-contain h-8 w-16 sm:h-12 sm:w-24 drop-shadow-lg transition-all duration-300"
                     style={{ filter: 'none' }}
                     loading="lazy"
                   />
@@ -221,25 +222,24 @@ const Highlights = () => {
             </div>
           </div>
         </div>
-        {/* Glassmorphic box for Sensors, only visible on hover of Multi-sensor fusion */}
-        <div id="sensors-glassmorphic" className={`bg-white/10 border border-white/20 rounded-xl p-6 shadow-md text-white max-w-xl w-full h-72 flex flex-col items-center justify-center text-center gap-4 backdrop-blur-md transition-all duration-700 ml-0 md:ml-8 absolute left-1/2 top-1/2 -translate-y-1/2 ${activeOverlay === 'sensors' ? 'scale-110 opacity-100 z-30 -translate-x-0' : 'scale-95 opacity-0 pointer-events-none z-0 -translate-x-1/2'}`} style={{ boxShadow: 'inset 0 4px 32px 0 rgba(127,0,255,0.10), 0 2px 16px 0 rgba(0,0,0,0.10)' }}>
+        <div id="sensors-glassmorphic" className={`section-wrapper bg-white/10 border border-white/20 rounded-xl p-4 sm:p-6 shadow-md text-white max-w-xs sm:max-w-xl w-full h-72 flex flex-col items-center justify-center text-center gap-4 backdrop-blur-md transition-all duration-700 ml-0 md:ml-8 absolute left-1/2 top-1/2 -translate-y-1/2 ${activeOverlay === 'sensors' ? 'scale-110 opacity-100 z-30 -translate-x-0' : 'scale-95 opacity-0 pointer-events-none z-0 -translate-x-1/2'}`} style={{ boxShadow: 'inset 0 4px 32px 0 rgba(127,0,255,0.10), 0 2px 16px 0 rgba(0,0,0,0.10)', overflow: 'hidden' }}>
           <h3 className="text-2xl md:text-3xl font-orbitron text-deepviolet mb-2 tracking-widest uppercase">Sensor Types</h3>
-          <div className="grid grid-cols-2 gap-4 w-full items-center justify-center">
+          <div className="grid grid-cols-2 gap-2 sm:gap-4 w-full items-center justify-center">
             <div className="flex flex-col items-center">
-              <img src="/images/aero.png" alt="RGB camera & LiDAR" className="h-12 w-12 object-contain mb-2" />
-              <span className="text-sm font-space-grotesk">RGB camera & LiDAR</span>
+              <img src="/images/aero.png" alt="RGB camera & LiDAR" className="h-8 w-8 sm:h-12 sm:w-12 object-contain mb-2" />
+              <span className="text-xs sm:text-sm font-space-grotesk">RGB camera & LiDAR</span>
             </div>
             <div className="flex flex-col items-center">
-              <img src="/images/robot.png" alt="Thermal Sensor" className="h-12 w-12 object-contain mb-2" />
-              <span className="text-sm font-space-grotesk">Thermal Sensor</span>
+              <img src="/images/robot.png" alt="Thermal Sensor" className="h-8 w-8 sm:h-12 sm:w-12 object-contain mb-2" />
+              <span className="text-xs sm:text-sm font-space-grotesk">Thermal Sensor</span>
             </div>
             <div className="flex flex-col items-center">
-              <img src="/images/ruler.png" alt="Ultra-soundingSensor" className="h-12 w-12 object-contain mb-2" />
-              <span className="text-sm font-space-grotesk">Ultra-soundingSensor</span>
+              <img src="/images/ruler.png" alt="Ultra-soundingSensor" className="h-8 w-8 sm:h-12 sm:w-12 object-contain mb-2" />
+              <span className="text-xs sm:text-sm font-space-grotesk">Ultra-soundingSensor</span>
             </div>
             <div className="flex flex-col items-center">
-              <img src="/images/AI.png" alt="Gas Detection Sensors" className="h-12 w-12 object-contain mb-2" />
-              <span className="text-sm font-space-grotesk">Gas Detection Sensors</span>
+              <img src="/images/AI.png" alt="Gas Detection Sensors" className="h-8 w-8 sm:h-12 sm:w-12 object-contain mb-2" />
+              <span className="text-xs sm:text-sm font-space-grotesk">Gas Detection Sensors</span>
             </div>
           </div>
         </div>
@@ -255,6 +255,10 @@ const Highlights = () => {
         }
         .animate-horizontal-scroll {
           animation: horizontal-scroll 18s linear infinite;
+        }
+        .section-wrapper {
+          box-sizing: border-box;
+          overflow: hidden;
         }
       `}</style>
     </section>

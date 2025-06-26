@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
+import { FiMenu, FiX } from 'react-icons/fi';
 
 interface GooeyNavItem {
   id?: string;
@@ -40,6 +41,7 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
     controlledActiveIndex !== undefined ? controlledActiveIndex : initialActiveIndex
   );
   const [dropdownOpen, setDropdownOpen] = useState<number | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Handle dropdown open with immediate effect
@@ -392,7 +394,18 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
           }
         `}
       </style>
-      <div className="relative" ref={containerRef}>
+      {/* Hamburger for mobile */}
+      <div className="sm:hidden flex items-center justify-end w-full mb-2 z-[10000] fixed top-0 right-0 left-0 bg-black/80 backdrop-blur-lg py-2 px-4">
+        <button
+          aria-label="Open menu"
+          className="p-2 text-techblue focus:outline-none"
+          onClick={() => setMobileOpen((v) => !v)}
+        >
+          {mobileOpen ? <FiX size={32} /> : <FiMenu size={28} />}
+        </button>
+      </div>
+      {/* Desktop nav */}
+      <div className="relative hidden sm:block" ref={containerRef}>
         <nav
           className="flex relative"
           style={{ transform: "translate3d(0,0,0.01px)" }}
@@ -479,6 +492,56 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
         <span className="effect filter" ref={filterRef} />
         <span className="effect text" ref={textRef} />
       </div>
+      {/* Mobile nav menu */}
+      {mobileOpen && (
+        <div className="fixed inset-0 z-[9999] bg-black/70 backdrop-blur-xl flex flex-col items-center justify-start pt-24 px-4 overflow-y-auto transition-all duration-300">
+          <div className="w-full max-w-xs mx-auto rounded-2xl bg-white/10 border border-white/20 shadow-2xl p-6 flex flex-col gap-6">
+            <ul className="flex flex-col gap-4 w-full text-xl font-orbitron">
+              {items.map((item, index) => (
+                <li key={index} className="w-full">
+                  <a
+                    href={item.href}
+                    className="block w-full text-white hover:text-techblue transition py-3 px-4 rounded-lg text-center bg-white/10 hover:bg-techblue/10"
+                    onClick={e => {
+                      setMobileOpen(false);
+                      if (item.href && item.href.startsWith('/')) {
+                        window.location.href = item.href;
+                      } else if (item.href && item.href.startsWith('#')) {
+                        const sectionId = item.href.replace('#', '');
+                        const section = document.getElementById(sectionId);
+                        if (section) {
+                          section.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      }
+                    }}
+                  >
+                    {item.label}
+                  </a>
+                  {/* Dropdown for mobile */}
+                  {item.dropdown && (
+                    <ul className="ml-2 mt-2 flex flex-col gap-2">
+                      {item.dropdown.map((dropdownItem, dIdx) => (
+                        <li key={dIdx}>
+                          <a
+                            href={dropdownItem.href}
+                            className="block w-full text-white/80 hover:text-techblue transition py-2 px-4 rounded-md text-center bg-white/10 hover:bg-techblue/10"
+                            onClick={e => {
+                              setMobileOpen(false);
+                              window.location.href = dropdownItem.href;
+                            }}
+                          >
+                            {dropdownItem.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
     </>
   );
 };

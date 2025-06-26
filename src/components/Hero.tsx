@@ -13,8 +13,37 @@ const Hero = () => (
         className="w-full h-full"
       />
     </div>
-    {/* Right center - Action buttons only */}
-    <div className="absolute top-1/2 right-16 -translate-y-1/2 flex flex-col gap-4 pointer-events-auto z-10">
+    {/* Action buttons: right-center on desktop, bottom on mobile */}
+    <div
+      className="hidden md:flex flex-col gap-4 pointer-events-auto z-10 absolute right-16 top-1/2 -translate-y-1/2"
+    >
+      <SimpleFluidGlass variant="animated" className="group">
+        <a
+          href="/safe-platforms"
+          className="block px-6 py-3 rounded-full font-bold font-rajdhani text-lg text-white shadow-lg hover:text-neongreen transition text-center"
+        >
+          Explore SAFE Platforms
+        </a>
+      </SimpleFluidGlass>
+      <SimpleFluidGlass variant="animated" className="group">
+        <a
+          href="/contact"
+          className="block px-6 py-3 rounded-full font-bold font-rajdhani text-lg text-techblue shadow-lg hover:text-white transition text-center"
+        >
+          Request Demo
+        </a>
+      </SimpleFluidGlass>
+      <SimpleFluidGlass variant="animated" className="group">
+        <a
+          href="#join"
+          className="block px-6 py-3 rounded-full font-bold font-rajdhani text-lg text-techblue shadow-lg hover:text-white transition text-center"
+        >
+          Join AvianPilot Network
+        </a>
+      </SimpleFluidGlass>
+    </div>
+    {/* Mobile: buttons at bottom */}
+    <div className="flex md:hidden flex-col gap-4 w-full items-center justify-end pb-8 absolute left-0 bottom-0 z-10">
       <SimpleFluidGlass variant="animated" className="group">
         <a
           href="/safe-platforms"

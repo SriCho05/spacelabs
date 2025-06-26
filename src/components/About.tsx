@@ -2,7 +2,7 @@ import React from 'react';
 import Beams from './Beams';
 
 const About = () => (
-  <section id="about" className="snap-center flex-shrink-0 w-full h-screen flex items-center justify-center bg-[#10101a] text-light relative overflow-hidden">
+  <section id="about" className="snap-center flex-shrink-0 w-full h-auto min-h-[600px] sm:h-screen flex items-center justify-center bg-[#10101a] text-light relative overflow-hidden pt-20 sm:pt-0">
     {/* Beams background - now fills the section */}
     <div className="absolute inset-0 w-full h-full z-0">
       <Beams
