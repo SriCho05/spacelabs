@@ -12,7 +12,7 @@ const ClientLayout = ({ children }: { children: React.ReactNode }) => {
     const timer = setTimeout(() => {
       setSwipeDown(true);
       setTimeout(() => setIsLoading(false), 700); // match transition duration
-    }, 8000); // 8 seconds for initial load
+    }, 30000); // 8 seconds for initial load
     return () => clearTimeout(timer);
   }, []);
 
