@@ -35,3 +35,7 @@
     transform: translate(5px, 5px);
   }
 }
+
+.section-wrapper {
+  border: none !important;
+}

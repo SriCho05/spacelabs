@@ -81,6 +81,9 @@ const Highlights = () => {
   // Track which overlay is active: 'trusted', 'sensors', or null
   const [activeOverlay, setActiveOverlay] = useState<null | 'trusted' | 'sensors'>(null);
 
+  // New: shift grid left on desktop when trusted or sensors overlay is active
+  const shiftLeft = activeOverlay === 'trusted' || activeOverlay === 'sensors';
+
   // Animation state for icon buttons
   const [trustedAnimKey, setTrustedAnimKey] = useState(0);
   const [sensorsAnimKey, setSensorsAnimKey] = useState(0);
@@ -151,22 +154,41 @@ const Highlights = () => {
           className="w-full h-full"
         />
       </div>
-      <div className="flex w-full max-w-6xl z-10 relative items-center justify-center px-2 sm:px-4">
+      <div className="flex w-full max-w-6xl z-10 items-center justify-center px-0 sm:justify-end sm:px-0"
+        style={{ gap: 0, minHeight: '100vh', position: 'relative' }} // always relative by default
+      >
         {/* Responsive: vertical on mobile, grid on desktop */}
-        <div className="relative flex-1 flex justify-center transition-all duration-700" id="bento-glassmorphic-wrapper">
+        <div
+          className="flex-1 flex items-center justify-center sm:justify-end min-h-[calc(100vh-2rem)] sm:min-h-[100vh] overflow-y-auto sm:overflow-visible"
+          id="bento-glassmorphic-wrapper"
+        >
           <div
-            className="flex flex-col gap-4 w-full max-w-xs mx-auto sm:grid sm:grid-cols-2 sm:grid-rows-2 sm:gap-8 sm:max-w-none transition-all duration-700"
             id="bento-glassmorphic"
+            className="flex flex-col gap-4 w-full max-w-xs mx-auto sm:grid sm:grid-cols-2 sm:grid-rows-2 sm:gap-x-0 sm:gap-y-0 sm:max-w-none transition-all duration-700"
             style={{
               margin: '0 auto',
-              transform: activeOverlay ? 'translateX(-300px)' : 'translateX(0)'
+              width: 'auto',
+              height: 'auto',
+              gap: 0,
+              columnGap: 9,
+              rowGap: 9,
+              justifyItems: 'center',
+              alignItems: 'center',
+              minWidth: '0',
+              minHeight: '0',
+              maxWidth: 'none',
+              maxHeight: 'none',
+              // Shift left on desktop if trusted or sensors overlay is active
+              ...(shiftLeft && typeof window !== 'undefined' && window.innerWidth >= 640
+                ? { transform: 'translateX(-300px)', transition: 'transform 0.7s cubic-bezier(0.4,0,0.2,1)' }
+                : {})
             }}
           >
             {highlights.map(({ number, suffix, icon, text }, index) => (
               <div
                 key={index}
-                className="section-wrapper bg-white/10 border border-white/20 rounded-xl p-3 sm:p-6 shadow-md text-white w-full sm:w-64 h-40 sm:aspect-square flex flex-col items-center justify-center text-center transition-all duration-700 ease-in-out backdrop-blur-md relative overflow-hidden mx-auto"
-                style={{ cursor: (index === 1 || index === 2) ? 'pointer' : 'default' }}
+                className="section-wrapper bg-white/10 rounded-xl shadow-md text-white w-64 h-40 sm:h-64 flex flex-col items-center justify-center text-center transition-all duration-700 ease-in-out backdrop-blur-md relative overflow-hidden"
+                style={{ cursor: (index === 1 || index === 2) ? 'pointer' : 'default', border: 'none', margin: 0, padding: 0 }}
               >
                 {/* Icon button for overlays */}
                 {index === 1 && (
@@ -201,7 +223,7 @@ const Highlights = () => {
           </div>
         </div>
         {/* Overlays remain unchanged, but add responsive max-w and overflow-hidden */}
-        <div id="trusted-glassmorphic" className={`section-wrapper bg-white/10 border border-white/20 rounded-xl p-4 sm:p-6 shadow-md text-white max-w-xs sm:max-w-xl w-full h-72 flex flex-col items-center justify-center text-center gap-4 backdrop-blur-md transition-all duration-700 ml-0 md:ml-8 absolute left-1/2 top-1/2 -translate-y-1/2 ${activeOverlay === 'trusted' ? 'scale-110 opacity-100 z-30 -translate-x-0' : 'scale-95 opacity-0 pointer-events-none z-0 -translate-x-1/2'}`} style={{ boxShadow: 'inset 0 4px 32px 0 rgba(0,240,255,0.10), 0 2px 16px 0 rgba(0,0,0,0.10)', overflow: 'hidden' }}>
+        <div id="trusted-glassmorphic" className={`section-wrapper bg-white/10 rounded-xl p-4 sm:p-6 shadow-md text-white max-w-xs sm:max-w-xl w-full h-72 flex flex-col items-center justify-center text-center gap-4 backdrop-blur-md transition-all duration-700 ml-0 md:ml-8 absolute left-1/2 top-1/2 -translate-y-1/2 ${activeOverlay === 'trusted' ? 'scale-110 opacity-100 z-30 -translate-x-0' : 'scale-95 opacity-0 pointer-events-none z-0 -translate-x-1/2'}`} style={{ boxShadow: 'inset 0 4px 32px 0 rgba(0,240,255,0.10), 0 2px 16px 0 rgba(0,0,0,0.10)', overflow: 'hidden', border: 'none' }}>
           <h3 className="text-2xl md:text-3xl font-orbitron text-techblue mb-2 tracking-widest uppercase">Trusted by</h3>
           <div className="relative w-full overflow-hidden group">
             <div className="flex animate-horizontal-scroll gap-4 w-max" style={{ animationPlayState: 'running' }}
@@ -222,7 +244,7 @@ const Highlights = () => {
             </div>
           </div>
         </div>
-        <div id="sensors-glassmorphic" className={`section-wrapper bg-white/10 border border-white/20 rounded-xl p-4 sm:p-6 shadow-md text-white max-w-xs sm:max-w-xl w-full h-72 flex flex-col items-center justify-center text-center gap-4 backdrop-blur-md transition-all duration-700 ml-0 md:ml-8 absolute left-1/2 top-1/2 -translate-y-1/2 ${activeOverlay === 'sensors' ? 'scale-110 opacity-100 z-30 -translate-x-0' : 'scale-95 opacity-0 pointer-events-none z-0 -translate-x-1/2'}`} style={{ boxShadow: 'inset 0 4px 32px 0 rgba(127,0,255,0.10), 0 2px 16px 0 rgba(0,0,0,0.10)', overflow: 'hidden' }}>
+        <div id="sensors-glassmorphic" className={`section-wrapper bg-white/10 rounded-xl p-4 sm:p-6 shadow-md text-white max-w-xs sm:max-w-xl w-full h-72 flex flex-col items-center justify-center text-center gap-4 backdrop-blur-md transition-all duration-700 ml-0 md:ml-8 absolute left-1/2 top-1/2 -translate-y-1/2 ${activeOverlay === 'sensors' ? 'scale-110 opacity-100 z-30 -translate-x-0' : 'scale-95 opacity-0 pointer-events-none z-0 -translate-x-1/2'}`} style={{ boxShadow: 'inset 0 4px 32px 0 rgba(127,0,255,0.10), 0 2px 16px 0 rgba(0,0,0,0.10)', overflow: 'hidden', border: 'none' }}>
           <h3 className="text-2xl md:text-3xl font-orbitron text-deepviolet mb-2 tracking-widest uppercase">Sensor Types</h3>
           <div className="grid grid-cols-2 gap-2 sm:gap-4 w-full items-center justify-center">
             <div className="flex flex-col items-center">

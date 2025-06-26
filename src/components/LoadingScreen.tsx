@@ -29,14 +29,14 @@ const LoadingScreen = ({ fadeOut = false, swipeDown = false, onFinish }: { fadeO
     messageInterval = setInterval(() => {
       messageIndex = (messageIndex + 1) % loadingMessages.length;
       setCurrentMessage(loadingMessages[messageIndex]);
-    }, 2000); // 2 second
+    }, 3000); // 3 seconds for less frequent updates
     const timer = setTimeout(() => {
       setShouldSwipe(true);
       swipeTimeout = setTimeout(() => {
         if (onFinish) onFinish();
       }, 700); // 700ms for swipe animation
       clearInterval(messageInterval); // Stop cycling messages when loading ends
-    }, 8000); // 8000ms = 8 seconds
+    }, 12000); // 12000ms = 12 seconds
     return () => {
       clearTimeout(timer);
       clearTimeout(swipeTimeout);
@@ -45,22 +45,28 @@ const LoadingScreen = ({ fadeOut = false, swipeDown = false, onFinish }: { fadeO
   }, []);
 
   return (
-    <div className={`fixed inset-0 bg-[#0a0a0a] flex flex-col items-center justify-center z-50 transition-opacity duration-700 ${fadeOut ? 'opacity-0 pointer-events-none' : 'opacity-100'} transition-transform duration-700 ${shouldSwipe || swipeDown ? 'translate-y-full pointer-events-none' : 'translate-y-0'}`} style={{ willChange: 'transform' }}>
+    <div
+      className={`fixed inset-0 bg-[#0a0a0a] flex flex-col items-center justify-center z-50 transition-opacity duration-700 ${fadeOut ? 'opacity-0 pointer-events-none' : 'opacity-100'} transition-transform duration-700 ${shouldSwipe || swipeDown ? 'translate-y-full pointer-events-none' : 'translate-y-0'}`}
+      style={{ willChange: 'opacity, transform' }}
+    >
       {/* Minimalistic local loading circle SVG as background */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
         <img
           src="/minimal-loading-circle.svg"
           alt="Loading Circle"
-          style={{ width: '90vw', height: '90vw', maxWidth: 900, maxHeight: 900 }}
+          style={{ width: '70vw', height: '70vw', maxWidth: 400, maxHeight: 400 }}
+          loading="lazy"
         />
       </div>
-      <div className="relative z-40 w-64 h-64 flex items-center justify-center">
-        {/* Use remote animation as requested */}
-        <DotLottieReact
-          src="https://lottie.host/aa775365-e10b-4769-abb6-413f8acbd793/V3tHSMsuFa.lottie"
-          loop
-          autoplay
-        />
+      <div className="relative z-40 w-48 h-48 sm:w-64 sm:h-64 flex items-center justify-center">
+        {/* Only render Lottie while loading screen is visible */}
+        {!(shouldSwipe || swipeDown) && (
+          <DotLottieReact
+            src="https://lottie.host/aa775365-e10b-4769-abb6-413f8acbd793/V3tHSMsuFa.lottie"
+            loop
+            autoplay
+          />
+        )}
       </div>
       <div className="relative z-40 mt-8 text-center">
         <p className="text-techblue font-rajdhani text-xl font-bold animate-pulse">
