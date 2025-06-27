@@ -1,9 +1,26 @@
 "use client";
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Spline from '@splinetool/react-spline';
 import SimpleFluidGlass from './SimpleFluidGlass';
+import { useLoadingState } from './ClientLayout';
 
-const Hero = () => (
+const Hero = () => {
+  const [showButtons, setShowButtons] = useState(false);
+  const isLoadingComplete = useLoadingState(state => state.isLoadingComplete);
+  
+  useEffect(() => {
+    // Only start the timer once loading is complete
+    if (isLoadingComplete) {
+      // Add a delay before showing buttons after loading screen is gone
+      const timer = setTimeout(() => {
+        setShowButtons(true);
+      }, 3000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [isLoadingComplete]);
+  
+  return (
   <section id="hero" className="relative w-full min-h-screen flex flex-col items-center justify-center bg-black text-light overflow-hidden snap-center flex-shrink-0">
     {/* Spline 3D background */}
     <div className="absolute inset-0 w-full h-full z-0">
@@ -15,7 +32,7 @@ const Hero = () => (
     </div>
     {/* Action buttons: right-center on desktop, bottom on mobile */}
     <div
-      className="hidden md:flex flex-col gap-4 pointer-events-auto z-10 absolute right-16 top-1/2 -translate-y-1/2"
+      className={`hidden md:flex flex-col gap-4 pointer-events-auto z-10 absolute right-16 top-1/2 -translate-y-1/2 transition-opacity duration-1000 ${showButtons ? 'opacity-100' : 'opacity-0'}`}
     >
       <SimpleFluidGlass variant="animated" className="group">
         <a
@@ -43,7 +60,7 @@ const Hero = () => (
       </SimpleFluidGlass>
     </div>
     {/* Mobile: buttons at bottom */}
-    <div className="flex md:hidden flex-col gap-4 w-full items-center justify-end pb-8 absolute left-0 bottom-0 z-10">
+    <div className={`flex md:hidden flex-col gap-4 w-full items-center justify-end pb-8 absolute left-0 bottom-0 z-10 transition-opacity duration-1000 ${showButtons ? 'opacity-100' : 'opacity-0'}`}>
       <SimpleFluidGlass variant="animated" className="group">
         <a
           href="/safe-platforms"
@@ -70,6 +87,7 @@ const Hero = () => (
       </SimpleFluidGlass>
     </div>
   </section>
-);
+  );
+};
 
 export default Hero;

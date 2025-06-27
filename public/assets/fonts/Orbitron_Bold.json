@@ -1,0 +1,187 @@
+{
+  "glyphs": {
+    "A": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "B": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "C": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "D": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "E": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "F": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "G": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "H": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "I": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "J": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "K": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "L": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "M": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "N": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "O": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "P": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "Q": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "R": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "S": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "T": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "U": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "V": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "W": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "X": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "Y": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    "Z": {
+      "ha": 500,
+      "x_min": 0,
+      "x_max": 500,
+      "o": "M 0 0 L 500 0 L 500 500 L 0 500 Z"
+    },
+    " ": {
+      "ha": 250
+    }
+  },
+  "familyName": "Orbitron",
+  "ascender": 800,
+  "descender": -200,
+  "underlinePosition": -100,
+  "underlineThickness": 50,
+  "boundingBox": {
+    "yMin": -200,
+    "xMin": -50,
+    "yMax": 800,
+    "xMax": 550
+  },
+  "resolution": 1000,
+  "original_font_information": {
+    "format": 0,
+    "copyright": "Copyright 2023 The Orbitron Project Authors (https://github.com/theleagueof/orbitron)",
+    "fontFamily": "Orbitron",
+    "fontSubfamily": "Bold",
+    "uniqueID": "Orbitron Bold",
+    "fullName": "Orbitron Bold",
+    "version": "Version 2.001",
+    "postScriptName": "Orbitron-Bold"
+  },
+  "cssFontWeight": "bold",
+  "cssFontStyle": "normal"
+}

@@ -209,35 +209,10 @@ export default function Home() {
     }, 650); // Match timeout from other handlers, allow smooth scroll to likely finish
   };
 
-  // Responsive: Switch to vertical scroll on small screens and remove snapping
-  useEffect(() => {
-    const mainEl = mainRef.current;
-    if (!mainEl) return;
-
-    function handleResize() {
-      if (window.innerWidth < 768) {
-        // Mobile: vertical scroll, no snapping
-        mainEl.classList.remove('flex', 'snap-x', 'snap-mandatory', 'snap-y');
-        mainEl.classList.add('block');
-        mainEl.style.overflowX = 'hidden';
-        mainEl.style.overflowY = 'auto';
-      } else {
-        // Desktop: horizontal scroll with snapping
-        mainEl.classList.remove('block', 'snap-y');
-        mainEl.classList.add('flex', 'snap-x', 'snap-mandatory');
-        mainEl.style.overflowX = 'auto';
-        mainEl.style.overflowY = 'hidden';
-      }
-    }
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   return (
     <main
       ref={mainRef}
-      id="scroll-container"
+      id="scroll-container" // Ensure Navbar's IntersectionObserver can find this root
       className="relative flex h-screen w-screen snap-x snap-mandatory overflow-x-auto overflow-y-auto scroll-smooth"
     >
       <Navbar
@@ -250,7 +225,7 @@ export default function Home() {
         totalSections={sections.length}
         activeSectionIndex={activeSectionIndex}
       />
-      <div className="flex w-max h-full md:flex-row flex-col">
+      <div className="flex w-max h-full">
         {sections.map(({ id, Component, title }) => (
           <div
             key={id}
@@ -258,7 +233,7 @@ export default function Home() {
           >
             <Component />
             <div className="absolute top-0 left-0 h-full w-20 md:w-24 z-30 flex items-center justify-center pointer-events-none overflow-hidden">
-              <div className="transform -rotate-90 whitespace-nowrap md:block hidden">
+              <div className="transform -rotate-90 whitespace-nowrap">
                 <ScrollVelocity
                   texts={[title.toUpperCase()]}
                   velocity={15}
